@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <title>Облік послуг — API</title>
+</head>
+<body>
+  <h1>Надання послуги</h1>
+  <button onclick="createService()">Зареєструвати послугу</button>
+  <pre id="response"></pre>
+
+  <script>
+    async function createService() {
+      const responseEl = document.getElementById('response');
+
+      const serviceData = {
+        title: "Перевезення цукру",
+        body: "Кількість: 10 тонн, Ціна: 1500 грн/т",
+        user_id: 123
+      };
+
+      try {
+        const res = await fetch("https://gorest.co.in/public/v2/posts", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer 67223436f625a4ea33bf2d3a1dee8edeb323fb014f3906a48af4ea28431a3854"
+          },
+          body: JSON.stringify(serviceData)
+        });
+
+        const result = await res.json();
+        responseEl.textContent = JSON.stringify(result, null, 2);
+      } catch (err) {
+        responseEl.textContent = "Помилка: " + err;
+      }
+    }
+  </script>
+</body>
+</html>
